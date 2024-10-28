@@ -1,0 +1,73 @@
+@model Core_MVC.Models.InterClass;
+
+<h1>Update Intern</h1>
+
+
+<form asp-action="UpdateIntern" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="c_internid1" />
+
+
+    <div class="form-group">
+        <label asp-for="c_InternName"></label>
+        <input asp-for="c_InternName" class="form-control" />
+        <span asp-validation-for="c_InternName" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+    <label asp-for="c_Gender" class="control-label col-md-2"></label>
+    <div class="col-md-10">
+            <input type="radio" value="M" asp-for="c_Gender">Male
+            <input type="radio" value="F" asp-for="c_Gender">Female
+            <span asp-validation-for="c_Gender" class="text-danger"></span>
+    </div>
+</div>
+
+    <div class="form-group">
+        <label asp-for="c_TopicId"></label>
+        <select asp-for="c_topicid" class="form-control" asp-items="ViewBag.TaskList">
+
+        </select>
+
+        <span asp-validation-for="c_TopicId" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="c_Date_Of_Presentation"></label>
+        <input asp-for="c_Date_Of_Presentation" class="form-control" type="date" />
+        <span asp-validation-for="c_Date_Of_Presentation" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="c_Status"></label>
+        <input asp-for="c_Status" type="checkbox" />
+        <span asp-validation-for="c_Status" class="text-danger"></span>
+    </div>
+
+
+    <!-- Topic Image Upload -->
+
+
+    <div class="form-group">
+        <label asp-for="c_Topic_Image"></label>
+        <input type="file" name="file" class="form-control" />
+        <span asp-validation-for="c_Topic_Image" class="text-danger"></span>
+    </div>
+
+
+    <!-- Display Existing Image if Exists -->
+    @if (!string.IsNullOrEmpty(Model.c_Topic_Image))
+    {
+        <div class="form-group">
+            <label>Current Image:</label>
+            <div>
+                <img src="@Model.c_Topic_Image" alt="Intern Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+            </div>
+        </div>
+    }
+
+
+    <button type="submit" class="btn btn-primary">Update Intern</button>
+    <a asp-action="GetAll" class="btn btn-secondary">Cancel</a>
+</form>

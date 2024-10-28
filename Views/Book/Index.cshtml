@@ -1,0 +1,76 @@
+@model IEnumerable<Core_MVC.Models.BookModel>
+
+@if(TempData["msg"] != null)
+{
+    <div id="alertMessage" class="alert alert-success">
+        @TempData["msg"]
+    </div>
+}
+<h1>Book Index</h1>
+<p>
+    <a asp-action="addBook" class="btn btn-primary">Add New Book</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="bookRow_@item.b_id">
+                    <td>@item.b_id</td>
+                    <td>@item.b_name</td>
+                    <td>@item.b_author</td>
+                    <td>@item.b_price</td>
+                    <td>
+                        <a asp-action="getDeleteBook" asp-route-id="@item.b_id" class="btn btn-info">Details</a> |
+                        <a asp-action="getUpdateBook" asp-route-id="@item.b_id" class="btn btn-warning">Edit</a> |
+                        <button class="btn btn-danger deleteBookBtn" data-id="@item.b_id">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.deleteBookBtn').on('click', function (e) {
+            e.preventDefault();
+
+            var bookId = $(this).data('id');
+            var rowId = "#bookRow_" + bookId;
+
+            $.ajax({
+                url: '@Url.Action("DeleteBook", "Book")', // Your delete action URL
+                type: 'POST',
+                data: { id: bookId },
+                success: function (result) {
+                    $(rowId).remove(); 
+                    setTimeout(()=>{
+                        $('#alertMessage').fadeOut('slow');
+                    },4000);
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: Could not delete the book.');
+                }
+            });
+        });
+    });
+</script>
+@section Scripts {
+     <script>
+        setTimeout(()=>{
+            $('#alertMessage').fadeOut('slow');
+        },4000);
+     </script>
+}

@@ -1,0 +1,131 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Core_MVC
+build_property.RootNamespace = Core_MVC
+build_property.ProjectDir = C:\Users\admin\Core_MVC\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\admin\Core_MVC
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/admin/Core_MVC/Views/AjaxBook/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWpheEJvb2tcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/AjaxIntern/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWpheEludGVyblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/AjaxUser/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWpheFVzZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/AjaxUser/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWpheFVzZXJcUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Book/addBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xhZGRCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Book/getDeleteBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xnZXREZWxldGVCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Book/getUpdateBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xnZXRVcGRhdGVCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Book/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Home/std.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxzdGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCIntern/AddIntern.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDSW50ZXJuXEFkZEludGVybi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCIntern/GetDeleteIntern.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDSW50ZXJuXEdldERlbGV0ZUludGVybi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCIntern/GetIntern.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDSW50ZXJuXEdldEludGVybi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCIntern/GetOneIntern.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDSW50ZXJuXEdldE9uZUludGVybi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCIntern/GetUpdateIntern.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDSW50ZXJuXEdldFVwZGF0ZUludGVybi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCIntern/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDSW50ZXJuXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCUser/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDVXNlclxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCUser/getEmailForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDVXNlclxnZXRFbWFpbEZvcmdvdFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCUser/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDVXNlclxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/MVCUser/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVZDVXNlclxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Test/AboutUs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVzdFxBYm91dFVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Test/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVzdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Core_MVC/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-n7v6pxu7ef

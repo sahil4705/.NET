@@ -1,0 +1,34 @@
+﻿@model Core_MVC.Models.BookModel;
+@{
+    ViewData["Title"] = "getUpdateBook";
+}
+
+<h1>getUpdateBook</h1>
+
+
+<form asp-action="UpdateBook" method="post">
+    <input type="hidden" asp-for="b_id" />
+
+
+    <div class="form-group">
+        <label asp-for="b_name"></label>
+        <input asp-for="b_name" class="form-control" />
+        <span asp-validation-for="b_name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="b_author"></label>
+        <input asp-for="b_author" class="form-control" />
+        <span asp-validation-for="b_author" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="b_price"></label>
+        <input asp-for="b_price" class="form-control" />
+        <span asp-validation-for="b_price" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-outline-primary">Update Book</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>

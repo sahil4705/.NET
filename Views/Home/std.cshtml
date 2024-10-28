@@ -1,0 +1,9 @@
+@model List<Core_MVC.Models.std>;
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.id</li>
+        <li>@item.name</li>        
+    }  
+</ul>

@@ -1,0 +1,228 @@
+@model Core_MVC.Models.User;
+
+<!-- Include Bootstrap and jQuery libraries -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div>
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#registration">Registration</button>
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#login">Login</button>
+</div>
+
+<!-- Registration Modal -->
+<div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="registrationForm" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputUsername"></label>
+                        <input type="text" class="form-control" id="username" name="c_username"
+                            placeholder="Enter Username">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"></label>
+                        <input type="email" class="form-control" id="email" name="c_email" placeholder="Enter email">
+                        <span id="emailError" class="text-danger"></span>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="gender1" name="c_gender" value="Male">
+                        <label class="form-check-label" for="exampleRadio1">Male</label><br>
+                        <input class="form-check-input" type="radio" id="gender2" name="c_gender" value="Female">
+                        <label class="form-check-label" for="exampleRadio2">Female</label>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"></label>
+                        <input type="password" class="form-control" id="password" name="c_password"
+                            placeholder="Password">
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputCPassword1"></label>
+                        <input type="password" class="form-control" id="cpassword" name="c_conform_password"
+                            placeholder="Conform Password">
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" id="addUserButton" class="btn btn-primary">Registration</button><br />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Login Modal -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form asp-action="Login" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputUsername"></label>
+                        <input type="text" class="form-control" id="Login_username" placeholder="Enter Username">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"></label>
+                        <input type="password" class="form-control" id="Login_password" placeholder="Password">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <p>Forgot Password? <a href="#" data-toggle="modal" data-target="#forgotPasswordModal" data-dismiss="modal">Click Here</a></p>
+                    </div>
+                    <button type="submit" id="LoginButton" class="btn btn-primary">Submit</button>
+                    <p>Create a new account ? @Html.ActionLink("Click Here", "Register", "MVCUser")</p>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Forgot Password Modal -->
+
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="ForgotPasswordForm">
+                    <div class="form-group">
+                        <label for="forgotPassword_email"></label>
+                        <input type="email" class="form-control" id="forgotPassword_email" placeholder="Enter your email">
+                        <span class="text-danger"></span>
+                    </div>
+                    <button type="submit" id="forgotPasswordButton" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+
+
+            function addUser() {
+                var user = {
+                    c_username: $('#username').val(),
+                    c_email: $('#email').val(),
+                    c_gender: $('input[name=c_gender]:checked').val(),
+                    c_password: $('#password').val(),
+                    c_conform_password: $('#cpassword').val(),
+                };
+                var formData = new FormData();
+                formData.append('c_username', user.c_username);
+                formData.append('c_email', user.c_email);
+                formData.append('c_gender', user.c_gender);
+                formData.append('c_password', user.c_password);
+                formData.append('c_conform_password', user.c_conform_password);
+
+                console.log(formData);
+
+
+                $.ajax({
+                    url: '/AjaxUser/Register',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#registration').modal('hide');
+                        alert(data);
+                    },
+                    error: function (error) {
+                        console.log('Error Adding Book', error);
+                    }
+                });
+            }
+
+            $('#addUserButton').click(function (e) {
+                e.preventDefault();
+                addUser();
+            });
+
+
+
+
+            function LoginUser() {
+                var user = {
+                    c_username: $('#Login_username').val(),
+                    c_password: $('#Login_password').val()
+                };
+                var formData = new FormData();
+                formData.append('c_username', user.c_username);
+                formData.append('c_password', user.c_password);
+                console.log(user);
+
+
+                $.ajax({
+                    url: '/AjaxUser/Login',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#login').modal('hide');
+                        if (data === "Login successful") {
+                            window.location.href = '/AjaxIntern/Index';
+                        } else {
+                            alert(data); 
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log('false', error);
+                    }
+                });
+            }
+
+            $('#LoginButton').click(function (e) {
+                e.preventDefault();
+                LoginUser();
+            });
+
+
+            $("#forgotPasswordButton").click(function(e){
+                e.preventDefault();
+                var email = $("#forgotPassword_email").val();
+
+                $.ajax({
+                    url: '/AjaxUser/checkEmailExist',
+                    type: 'POST',
+                    data: { email: email },
+                    success: function (data) {
+                        $('#forgotPasswordModal').modal('hide');
+                        alert(data);
+                    },
+                    error: function (error) {
+                        console.log('false', error);
+                    }
+                });
+            });
+
+        });
+
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model Core_MVC.Models.BookModel;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@if(TempData["msg"] != null)
+{
+    <div id="alertMessage" class="alert alert-success">
+        @TempData["msg"]
+    </div>
+}
+
+<h1>Add Book</h1>
+<div class="container">
+    <form asp-action="addBook" method="post" class="my-4">
+        <div class="form-group">
+            <label asp-for="b_name" class="control-label"></label>
+            <input asp-for="b_name" class="form-control" />
+            <span asp-validation-for="b_name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="b_author" class="control-label"></label>
+            <input asp-for="b_author" class="form-control" />
+            <span asp-validation-for="b_author" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="b_price" class="control-label"></label>
+            <input asp-for="b_price" class="form-control" />
+            <span asp-validation-for="b_price" class="text-danger"></span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-outline-primary">Add Book</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+    </form>
+</div>
+
+@section Scripts {
+     <script>
+        setTimeout(()=>{
+            $('#alertMessage').fadeOut('slow');
+        },4000);
+     </script>
+}

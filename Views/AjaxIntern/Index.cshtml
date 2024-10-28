@@ -1,0 +1,456 @@
+@model Core_MVC.Models.InterClass;
+
+<!-- Include Bootstrap and jQuery libraries -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .text-danger {
+        color: red;
+    }
+</style>
+
+<div>
+    <h2>Interns</h2>
+    <h1></h1>
+    <button class="btn btn-primary mb-3 addInternForm" data-toggle="modal" data-target="#addBookModal">Add New
+        Intern</button>
+    <table id="bookTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>TopicID</th>
+                <th>Data Of Presentation</th>
+                <th>Status</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- The table data will be filled using AJAX -->
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Add Intern Form  -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookModalLabel">Add New Intern</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="my-4" id="addBookForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="c_InternName" class="control-label"></label>
+                        <input asp-for="c_InternName" class="form-control" id="intername" name="intername" />
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="c_Gender" class="control-label"></label>
+                        <input type="radio" value="M" asp-for="c_Gender" id="interngender" name="interngender">Male
+                        <input type="radio" value="F" asp-for="c_Gender" id="interngender" name="interngender">Female
+
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_topicid">Select Task</label>
+                        <select asp-for="c_topicid" class="form-control" id="interntask" name="interntask">
+                            @foreach (AssignTaskClass item in ViewBag.topics)
+                            {
+                                <option value="@item.c_topicid">@item.c_topicname</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Date_Of_Presentation" class="control-label"></label>
+                        <input type="date" asp-for="c_Date_Of_Presentation" id="interndop" name="interndop"
+                            class="form-control" />
+
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Status" class="control-label"></label><br>
+                        <input type="checkbox" asp-for="c_Status" id="internstatus" name="internstatus">
+                        <label class="control-label ms-md-5">Is Active</label>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Topic_Image" class="control-label"></label>
+                        <input type="file" id="interimage" name="interimage">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="addBookButton">Add Inetrn</button>
+                    <a class="btn btn-secondary">Back to List</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Intern Modal -->
+<div class="modal fade" id="editInternModel" tabindex="-1" role="dialog" aria-labelledby="editInternModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Intern</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="my-4" id="editInternForm" enctype="multipart/form-data">
+                    <div>
+                        <input type="hidden" id="i_id" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="c_InternName" class="control-label"></label>
+                        <input asp-for="c_InternName" class="form-control" id="i_name" name="intername"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Gender" class="control-label"></label><br>
+                        <input type="radio" value="M" asp-for="c_Gender" id="i_genderMale" name="interngender"> Male
+                        <input type="radio" value="F" asp-for="c_Gender" id="i_genderFemale" name="interngender"> Female
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_topicid">Select Task</label>
+                        <select class="form-control interntask" id="i_task" name="interntask">
+                            @foreach (AssignTaskClass item in ViewBag.topics)
+                            {
+                                <option value="@item.c_topicid">@item.c_topicname</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Date_Of_Presentation" class="control-label"></label>
+                        <input type="date" asp-for="c_Date_Of_Presentation" id="i_dop" class="form-control" name="interndop"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Status" class="control-label"></label><br>
+                        <input type="checkbox" asp-for="c_Status" id="i_status" name="internstatus">
+                        <label class="control-label ms-md-5">Is Active</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="c_Topic_Image" class="control-label"></label>
+                        <input type="file" name="file" id="i_image" name="interimage">
+                    </div>
+
+
+
+                    <button type="button" class="btn btn-primary" id="updateInternButton">Update Intern</button>
+                    <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+
+            function loadIntern() {
+                $.ajax({
+                    url: '/AjaxIntern/getIntern',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        const bookTable = $('#bookTable tbody');
+                        bookTable.empty();
+
+                        data.forEach(function (intern) {
+                            const row = `<tr>
+                                            <td>${intern.c_internid1}</td>
+                                            <td>${intern.c_InternName}</td>
+                                            <td>${intern.c_Gender}</td>
+                                            <td>${intern.c_TopicId}</td>
+                                            <td>${intern.c_Date_Of_Presentation}</td>
+                                            <td>${intern.c_Status}</td>
+                                            <td><img src="${intern.c_Topic_Image}" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px;"></td>
+                                            <td>
+                                                <button class="btn btn-outline-dark DetailBtn" data-id="${intern.c_internid1}" data-toggle="modal" data-target="#getDetailModal    ">Details</button>
+                                                <button class="btn btn-outline-info UpdateBtn" data-id="${intern.c_internid1}" data-toggle="modal" data-target="#editInternModel">Edit</button>
+                                                <button class="btn btn-outline-danger DeleteBtn" data-id="${intern.c_internid1}">Delete</button>
+                                            </td>
+                                        </tr>`;
+                            bookTable.append(row);
+                        });
+                    },
+                    error: function (error) {
+                        console.log('Error Loading Book', error);
+                    }
+                });
+            }
+
+            loadIntern();
+
+            $('#bookTable').on('click', '.DeleteBtn', function () {
+                var id = $(this).data('id');
+                console.log(id);
+                $.ajax({
+                    url: '/AjaxIntern/DeleteIntern',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (data) {
+                        loadIntern();
+                        alert(data.message);
+                    },
+                    error: function (error) {
+                        console.log('Error Deleting Book', error);
+                    }
+                });
+            });
+
+
+        @* $('.addInternForm').click(function () {
+                console.log("1");
+                $.ajax({
+                    url: '/AjaxIntern/AddInternTask',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+            console.log(data);
+            var taskList = $('#interntask');
+                        taskList.empty();
+                        data.forEach(function (task) {
+                            taskList.append($('<option>', { value: task.c_topicid_2, text: task.c_topicname }));
+            });
+            },
+                    error: function (error) {
+            console.log('Error Loading task', error);
+            }
+            });
+            }); *@
+
+
+                function addIntern() {
+
+                    var formData = new FormData();
+
+                    formData.append('c_InternName', $('#intername').val());
+                    formData.append('c_Gender', $('#interngender:checked').val());
+                    formData.append('c_TopicId', $('#interntask').val());
+                    formData.append('c_Date_Of_Presentation', $('#interndop').val());
+                    formData.append('c_Status', $('#internstatus').is(':checked') ? true : false);
+                    formData.append('file', $("#interimage").prop("files")[0]);
+
+
+                    $.ajax({
+                        url: '/AjaxIntern/AddIntern',
+                        type: 'POST',
+                        data: formData,
+                        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                        contentType: false, // Required to ensure proper file upload
+                        success: function (data) { // Reload the list or update the UI as needed
+                            alert(data.message);
+                            $('#addBookModal').modal('hide');
+                            loadIntern();
+                        },
+                        error: function (error) {
+                            console.log('Error Adding Intern:', error); // Log any errors for debugging
+                        }
+                    });
+
+                    console.log('FormData sent:', formData);
+                }
+
+            $('#addBookForm').validate({
+                rules: {
+                    intername: {
+                        required: true,
+                    },
+                    interngender: {
+                        required: true
+                    },
+                    interntask: {
+                        required: true
+                    },
+                    interndop: {
+                        required: true
+                    },
+                    internstatus: {
+                        required: true
+                    },
+                    interimage: {
+                        required: true
+                    }
+                },
+                messages: {
+                    intername: { required: "Please enter your name" },
+                    interngender: { required: "Please select your gender" },
+                    interntask: { required: "Please select a task" },
+                    interndop: { required: "Please select a date" },
+                    internstatus: { required: "Please select a status" },
+                    interimage: { required: "Please select a file" }
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('text-danger');  // Add the red color class
+                    error.insertAfter(element);
+                },
+                submitHandler: function (form) {
+                    addIntern();
+                }
+            });
+
+
+            $('#addBookButton').click(function (e) {
+                e.preventDefault();
+                if ($('#addBookForm').valid()) {
+                    addIntern();
+                }
+            });
+
+
+
+            $('#bookTable').on('click', '.UpdateBtn', function () {
+                var id = $(this).data('id');
+                $('#editBookId').val(id);
+                $.ajax({
+                    url: '/AjaxIntern/getUpdateIntern',
+                    type: 'GET',
+                    data: { id: id },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        $('#i_id').val(data.c_internid1);
+                        $('#i_name').val(data.c_InternName);
+                        $('#interndop').val(data.c_Date_Of_Presentation);
+                        $('#i_genderMale').prop('checked', data.c_Gender === 'M');
+                        $('#i_genderFemale').prop('checked', data.c_Gender === 'F');
+                        $('#i_task').val(data.c_TopicId);
+                        let dateValue = new Date(data.c_Date_Of_Presentation);
+
+                        // Convert the date to YYYY-MM-DD format
+                        let formattedDate = dateValue.toISOString().split('T')[0];
+                        $('#i_dop').val(formattedDate);
+                        $('#i_status').prop('checked', data.c_Status);
+                        $('#i_image').val(data.c_Topic_Image)
+
+                        $('#i_image').attr('src', data.c_Topic_Image);
+
+                        let imageTag = $('<img>', {
+                            id: 'i_mage',
+                            src: data.c_Topic_Image,
+                            alt: 'Intern Topic Image',
+                            style: 'max-width: 100px; max-height: 100px;'
+                        });
+                        $('#editInternModel .modal-body').append(imageTag);
+
+
+                        $('#editBookModal').modal('show');
+
+                    },
+                    error: function (error) {
+                        console.log('Error Loading Book Details', error);
+                    }
+                });
+            });
+
+
+            function UpdateIntern() {
+
+                var formData = new FormData();
+
+                formData.append('c_internid1', $('#i_id').val());
+                formData.append('c_InternName', $('#i_name').val());
+                formData.append('c_Gender', $('#i_genderMale').is(':checked') ? 'M' : 'F');
+                formData.append('c_TopicId', $('#i_task').val());
+                formData.append('c_Date_Of_Presentation', $('#i_dop').val());
+                formData.append('c_Status', $('#i_status').is(':checked') ? true : false);
+                formData.append('file', $("#i_image").prop("files")[0]);
+
+
+                console.log(formData);
+                $.ajax({
+                    url: '/AjaxIntern/UpdateIntern',
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                    contentType: false, // Required to ensure proper file upload
+                    success: function (data) { // Reload the list or update the UI as needed
+                        loadIntern();
+                        alert(data.message);
+                        $('#editInternModel').modal('hide');
+                    },
+                    error: function (error) {
+                        console.log('Error Adding Intern:', error); // Log any errors for debugging
+                    }
+                });
+
+                console.log('FormData sent:', formData);
+            }
+
+
+            $('#editInternForm').validate({
+                rules: {
+                    intername: {
+                        required: true,
+                    },
+                    interngender: {
+                        required: true
+                    },
+                    interntask: {
+                        required: true
+                    },
+                    interndop: {
+                        required: true
+                    },
+                    internstatus: {
+                        required: true
+                    },
+                    interimage: {
+                        required: true
+                    }
+                },
+                messages: {
+                    intername: { required: "Please enter your name" },
+                    interngender: { required: "Please select your gender" },
+                    interntask: { required: "Please select a task" },
+                    interndop: { required: "Please select a date" },
+                    internstatus: { required: "Please select a status" },
+                    interimage: { required: "Please select a file" }
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('text-danger');  // Add the red color class
+                    error.insertAfter(element);
+                },
+                submitHandler: function (form) {
+                    addIntern();
+                }
+            });
+
+
+
+            $('#updateInternButton').click(function () {
+                if($('#editInternForm').valid())
+                
+                {
+                    UpdateIntern();
+                }
+               
+            });
+
+
+        });
+
+    </script>
+}

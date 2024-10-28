@@ -1,0 +1,88 @@
+@model IEnumerable<Core_MVC.Models.InterClass>;
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<b>
+    @ViewBag.user
+</b>
+<h2>Get All Intern</h2>
+
+@if(TempData["msg"] != null)
+{
+    <div id="alertMessage" class="alert alert-success">
+        @TempData["msg"]
+    </div>
+}
+
+
+
+<p>
+    <a asp-action="AddIntern" class="btn btn-primary">Add New Intern</a>
+    <a asp-action="Logout" class="btn btn-primary">Logout</a>
+</p>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>TopicID</th>
+                <th>Date Of Presentation</th>
+                <th>Status</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.c_internid1</td>
+                    <td>@item.c_InternName</td>
+                    <td>@item.c_Gender</td>
+                    <td>@item.c_TopicId</td>
+                    <td>@item.c_Date_Of_Presentation</td>
+                    <td>@item.c_Status</td>
+                    <td> <img src="@item.c_Topic_Image" alt="Profile Image" class="rounded-circle"
+                        style="width: 50px; height: 50px;"> 
+                    </td>
+                    <td>
+                        <a asp-action="GetOneIntern" asp-route-id="@item.c_internid1" class="btn btn-info">Details</a> |
+                        <a asp-action="GetUpdateIntern" asp-route-id="@item.c_internid1" class="btn btn-warning">Edit</a> |
+                        <a asp-action="GetDeleteIntern" asp-route-id="@item.c_internid1" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete Intern?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+     <script>
+        setTimeout(()=>{
+            $('#alertMessage').fadeOut('slow');
+        },4000);
+     </script>
+}

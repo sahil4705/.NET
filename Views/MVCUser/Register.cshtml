@@ -1,0 +1,85 @@
+@model Core_MVC.Models.User;
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+@if (TempData["msg"] != null)
+{
+    <div id="alertMessage" class="alert alert-danger">
+        @TempData["msg"]
+    </div>
+}
+
+
+@* <div asp-validation-summary="All">
+</div> *@
+<h1>Registration</h1>
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label for="exampleInputUsername" asp-for="c_username"></label>
+        <input type="text" asp-for="c_username" class="form-control" id="exampleInputUsername"
+            placeholder="Enter email">
+        <span asp-validation-for="c_username" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="exampleInputEmail1" asp-for="c_email"></label>
+        <input type="email" asp-for="c_email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <span asp-validation-for="c_email" id="emailError" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-check">
+        <input class="form-check-input" type="radio" asp-for="@Model.c_gender" id="exampleRadio1" value="Male">
+        <label class="form-check-label" for="exampleRadio1">Male</label><br>
+        <input class="form-check-input" type="radio" asp-for="@Model.c_gender" id="exampleRadio2" value="Female">
+        <label class="form-check-label" for="exampleRadio2">Female</label>
+        <span asp-validation-for="c_gender" class="text-danger"></span>
+    </div>
+
+    <br />
+    <div class="form-group">
+        <label for="exampleInputPassword1" asp-for="c_password"></label>
+        <input type="password" asp-for="c_password" class="form-control" id="exampleInputPassword1"
+            placeholder="Password">
+        <span asp-validation-for="c_password" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="exampleInputCPassword1" asp-for="c_conform_password"></label>
+        <input type="password" asp-for="c_conform_password" class="form-control" id="exampleInputCPassword1"
+            placeholder="Conform Password">
+        <span asp-validation-for="c_conform_password" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <p>Go to Login Page ? @Html.ActionLink("Login", "Login", "MVCUser")</p>
+
+</form>
+@section Scripts {
+    <script>
+        setTimeout(() => {
+            $('#alertMessage').fadeOut('slow');
+        }, 2000);
+
+        $(document).ready(function () {
+
+            $("#exampleInputEmail1").on("input", function () {
+                var email = $(this).val();
+                console.log(email);
+                $.ajax({
+                    url: '/MVCUser/GetEmail', 
+                    type: 'GET',
+                    data: { email: email },
+                    success: function (data) {
+
+                            $("#emailError").text(data);
+
+                    },
+                    error: function () {
+                        alert('An error occurred while checking the email.');
+                    }
+                });
+            });
+
+        });
+    </script>
+}

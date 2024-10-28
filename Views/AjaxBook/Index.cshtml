@@ -1,0 +1,332 @@
+@model IEnumerable<Core_MVC.Models.BookModel>;
+
+<!-- Include Bootstrap and jQuery libraries -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div>
+    <h2>Books</h2>
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addBookModal">Add New Book</button>
+    <table id="bookTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>MyId</th>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- The table data will be filled using AJAX -->
+        </tbody>
+    </table>
+</div>
+
+<!--Get Detail Book Modal -->
+<div class="modal fade" id="getDetailModal" tabindex="-1" role="dialog" aria-labelledby="getDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="getDetailModalLabel">Book Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @* <div class="modal-body">
+                <form id="getDetailModalForm">
+                    <div class="form-group">
+                        <label for="booktitle">Title:</label>
+                        <input type="text" class="form-control" id="getBooktitle" name="booktitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author:</label>
+                        <input type="text" class="form-control" id="getAuthor" name="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="text" class="form-control" id="getPrice" name="price">
+                    </div>
+                </form> *@
+                <table id="getData">
+                    <thead>
+                        <tr>
+                            <th>MyId</th>
+                            <th>Book Title</th>
+                            <th>Author</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- The table data will be filled using AJAX -->
+                    </tbody>
+                    
+                </table>
+          
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Book Modal -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookModalLabel">Add New Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBookForm">
+                    <div class="form-group">
+                        <label for="booktitle">Title:</label>
+                        <input type="text" class="form-control" id="booktitle" name="booktitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author:</label>
+                        <input type="text" class="form-control" id="author" name="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="text" class="form-control" id="price" name="price">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addBookButton">Add Book</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Book Modal -->
+<div class="modal fade" id="editBookModal" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBookModalLabel">Edit Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editBookForm">
+                    <input type="hidden" id="editBookId" name="editBookId">
+                    <div class="form-group">
+                        <label for="editBookTitle">Title:</label>
+                        <input type="text" class="form-control" id="editBookTitle" name="editBookTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookAuthor">Author:</label>
+                        <input type="text" class="form-control" id="editBookAuthor" name="editBookAuthor">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookPrice">Price:</label>
+                        <input type="text" class="form-control" id="editBookPrice" name="editBookPrice">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateBookButton">Update Book</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function() {
+
+            function Clear()
+            {
+                $('#booktitle').val(""),
+                $('#author').val(""),
+                $('#price').val("")
+            }
+
+            function loadBook()
+            {
+                $.ajax({
+                    url: '/AjaxBook/GellAllBook',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        const bookTable = $('#bookTable tbody');
+                        bookTable.empty();
+
+                        data.forEach(function (book) {
+                            const row = `<tr>
+                                <td>${book.b_id}</td>
+                                <td>${book.b_name}</td>
+                                <td>${book.b_author}</td>
+                                <td>${book.b_price}</td>
+                                <td>
+                                    <button class="btn btn-outline-dark DetailBtn" data-id="${book.b_id}" data-toggle="modal" data-target="#getDetailModal">Details</button>
+                                    <button class="btn btn-outline-info UpdateBtn" data-id="${book.b_id}" data-toggle="modal" data-target="#editBookModal">Edit</button>
+                                    <button class="btn btn-outline-danger DeleteBtn" data-id="${book.b_id}">Delete</button>
+                                </td>
+                            </tr>`;
+                            bookTable.append(row);
+                        });
+                    },
+                    error: function(error){
+                        console.log('Error Loading Book',error);
+                    }
+                });
+            }
+
+            loadBook();
+
+            //Get Details
+
+            $('#bookTable').on('click', '.DetailBtn', function() {
+                var id = $(this).data('id');
+                //  var bookId = this.id;
+                $('#editBookId').val(id);
+                $.ajax({
+                    url: '/AjaxBook/GetBookDetails',
+                    type: 'GET',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function(book) {
+                        const bookTable = $('#getData tbody');
+                        bookTable.empty();
+                        const row = `<tr>
+                                <td>${book.b_id}</td>
+                                <td>${book.b_name}</td>
+                                <td>${book.b_author}</td>
+                                <td>${book.b_price}</td>
+                            </tr>`;
+                            bookTable.append(row);
+                    },
+                    error: function(error){
+                        console.log('Error Loading Book Details',error);
+                    }
+                });
+
+            });
+
+
+
+            //Add Book
+
+            function addBook()
+            {
+                var book = {
+                    b_name: $('#booktitle').val(),
+                    b_author: $('#author').val(),
+                    b_price: $('#price').val()
+                };
+
+                $.ajax({
+                    url: '/AjaxBook/AddBook',
+                    type: 'POST',
+                    contentType: 'application/json charset=utf-8',
+                    data: JSON.stringify(book),
+                    success: function(data) {
+                        loadBook();
+                        Clear();
+                        $('#addBookModal').modal('hide');
+                        alert(data.message);
+                    },
+                    error: function(error){
+                        console.log('Error Adding Book',error);
+                    }
+                });
+            }
+
+            $('#addBookButton').click(function() {
+                addBook();
+            });
+
+
+            //Get Book Details
+
+            $('#bookTable').on('click', '.UpdateBtn', function() {
+                var id = $(this).data('id');
+                $('#editBookId').val(id);
+                $.ajax({
+                    url: '/AjaxBook/GetBookDetails',
+                    type: 'GET',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#editBookTitle').val(data.b_name);
+                        $('#editBookAuthor').val(data.b_author);
+                        $('#editBookPrice').val(data.b_price);  
+                        $('#editBookModal').modal('show');
+                    },
+                    error: function(error){
+                        console.log('Error Loading Book Details',error);
+                    }
+                });
+
+            });
+
+            
+            //Update Book
+
+            function updateBook()
+            {
+                var book = {
+                    b_id: $('#editBookId').val(),
+                    b_name: $('#editBookTitle').val(),
+                    b_author: $('#editBookAuthor').val(),
+                    b_price: $('#editBookPrice').val()
+                };
+
+                $.ajax({
+                    url: '/AjaxBook/UpdateBookData',
+                    type: 'POST',
+                    contentType: 'application/json charset=utf-8',
+                    data: JSON.stringify(book),
+                    success: function(data) {
+                        loadBook();
+                        $('#editBookModal').modal('hide');
+                        alert(data.message);
+                    },
+                    error: function(error){
+                        console.log('Error Updating Book',error);
+                    }
+                });
+            }
+
+            $('#updateBookButton').click(function() {
+                updateBook();
+            });
+
+
+            $('#bookTable').on('click','.DeleteBtn',function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '/AjaxBook/DeleteBook/'+id,
+                    type: 'POST',
+                    data: {id: id},
+                    success: function(data) {
+                        
+                        alert(data.message);
+                        loadBook();
+                    },
+                    error: function(error){
+                        console.log('Error Deleting Book',error);
+                    }
+                });
+            });
+            
+
+        });
+
+    </script>
+}

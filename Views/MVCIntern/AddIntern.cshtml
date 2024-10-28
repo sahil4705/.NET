@@ -1,0 +1,67 @@
+@model Core_MVC.Models.InterClass;
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Validation scripts -->
+@* <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.11/dist/jquery.validate.unobtrusive.min.js"></script>  *@
+
+
+<h2>Add Inetrn</h2>
+
+<div class="container">
+    <form asp-action="AddIntern" method="post" class="my-4" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="c_InternName" class="control-label"></label>
+            <input asp-for="c_InternName" class="form-control" />
+            <span asp-validation-for="c_InternName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="c_Gender" class="control-label"></label>
+            <input type="radio" value="M" asp-for="c_Gender">Male
+            <input type="radio" value="F" asp-for="c_Gender">Female
+            <span asp-validation-for="c_Gender" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="c_topicid">Select Task</label>
+            <select asp-for="c_topicid" class="form-control" asp-items="ViewBag.TaskList"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="c_Date_Of_Presentation" class="control-label"></label>
+            <input type="date" asp-for="c_Date_Of_Presentation" class="form-control" />
+            <span asp-validation-for="c_Date_Of_Presentation" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="c_Status" class="control-label"></label>
+            <input type="checkbox" asp-for="c_Status" class="form-check-input ms-4">
+            <label class="control-label ms-md-5">Is Active</label>
+            <span asp-validation-for="c_Status" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="c_Topic_Image" class="control-label"></label>
+            <input type="file" name="file" id="">
+            <span asp-validation-for="c_Topic_Image " class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Inetrn</button>
+        <a asp-action="GetIntern" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>
+
+
+
+
